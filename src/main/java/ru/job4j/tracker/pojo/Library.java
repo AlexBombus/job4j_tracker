@@ -19,11 +19,13 @@ public class Library {
             System.out.println("Книга " + book.getName() + ", " + book.getPages() + " страниц.");
         }
         System.out.println();
-        for (int i = 0; i < lib.length; i++) {
-            if (lib[i].getName().equals("Clean code")) {
-                System.out.println("Книга " + lib[i].getName() + ", " + lib[i].getPages() + " страниц.");
+        for (Book book : lib) {
+            if (book.getName().equals("Clean code")) {
+                System.out.println("Книга " + book.getName()
+                                        + ", " + book.getPages() + " страниц.");
             }
         }
 
     }
+
 }

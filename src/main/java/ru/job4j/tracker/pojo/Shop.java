@@ -1,5 +1,6 @@
 package ru.job4j.tracker.pojo;
 
+
 public class Shop {
     public static int indexOfNull(Product[] products) {
         int index = -1;

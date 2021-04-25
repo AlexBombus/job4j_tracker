@@ -1,7 +1,6 @@
 package ru.job4j.tracker.pojo;
 
 import static org.hamcrest.Matchers.is;
-
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 

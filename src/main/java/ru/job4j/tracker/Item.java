@@ -40,7 +40,7 @@ public class Item {
         return "Item{" + "id = " + id + ", name = '" + name + '\'' + ", created = " + created + '}';
     }
 
-    public LocalDateTime getCreated() {
+    public LocalDateTime getCreated() { // может изменить тип на String и изменить формат времени?
         return created;
     }
 }

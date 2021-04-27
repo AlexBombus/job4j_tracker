@@ -11,12 +11,11 @@ public class StartUI {
         tracker.add(par);
         System.out.println(tracker.findById(par.getId()));
 
-        /* Время создания заявки
+        /** Изменение формата времени создания заявки
         LocalDateTime currentDateTime = par.getCreated();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String currentDateTimeFormat = currentDateTime.format(formatter);
         System.out.println(currentDateTimeFormat);
-
          */
 
     }

@@ -39,9 +39,8 @@ public class Item {
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String wasCreated = created.format(formatter);
         return "Item{" + "id = " + id + ", name = '" + name + '\''
-                + ", created = " + wasCreated + '}';
+                + ", created = " + created.format(formatter) + '}';
     }
 
     public LocalDateTime getCreated() {

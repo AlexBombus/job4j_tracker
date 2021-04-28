@@ -69,10 +69,11 @@ public class StartUI {
                 System.out.println("=== Find item by name ====");
                 System.out.print("Enter name: ");
                 String name = scanner.nextLine();
-                Item[] found = tracker.findByName(name);
+                Item[] found =  tracker.findByName(name);
                 if (found.length > 0) {
                     for (Item itm : found) {
-                        System.out.println(itm);
+                        System.out.println("Item was found. Item id: " + itm.getId()
+                                + ", Item name is: "  + itm.getName());
                     }
 
                 } else {

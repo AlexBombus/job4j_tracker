@@ -38,7 +38,16 @@ public class StartUI {
                 if (tracker.replace(id, item)) {
                     System.out.println("Item has been edited successfully.");
                 } else {
-                    System.out.println("Item with this id was not found.");
+                    System.out.println("Error. Item with this id was not found.");
+                }
+            } else if (select == 3) {
+                System.out.println("=== Delete item ====");
+                System.out.print("Enter id: ");
+                int id = Integer.parseInt(scanner.nextLine());
+                if (tracker.delete(id)) {
+                    System.out.println("The item has been successfully deleted.");
+                } else {
+                    System.out.println("Error. No item found with this id.");
                 }
             } else if (select == 6) {
                 run = false;

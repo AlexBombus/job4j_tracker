@@ -1,6 +1,7 @@
 package ru.job4j.tracker;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Item {
     private int id;
@@ -37,10 +38,20 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Item{" + "id = " + id + ", name = '" + name + '\'' + ", created = " + created + '}';
+        LocalDateTime currentDateTime = this.created;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String currentDateTimeFormat = currentDateTime.format(formatter);
+        return "Item{" + "id = " + id + ", name = '" + name + '\''
+                + ", created = " + currentDateTimeFormat + '}';
     }
 
-    public LocalDateTime getCreated() { // может изменить тип на String и изменить формат времени?
+    public LocalDateTime getCreated() {
         return created;
     }
 }
+    /** Изменение формата времени создания заявки
+    LocalDateTime currentDateTime = par.getCreated();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    String currentDateTimeFormat = currentDateTime.format(formatter);
+    System.out.println(currentDateTimeFormat);
+    */

@@ -38,20 +38,13 @@ public class Item {
 
     @Override
     public String toString() {
-        LocalDateTime currentDateTime = this.created;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String currentDateTimeFormat = currentDateTime.format(formatter);
+        String wasCreated = created.format(formatter);
         return "Item{" + "id = " + id + ", name = '" + name + '\''
-                + ", created = " + currentDateTimeFormat + '}';
+                + ", created = " + wasCreated + '}';
     }
 
     public LocalDateTime getCreated() {
         return created;
     }
 }
-    /** Изменение формата времени создания заявки
-    LocalDateTime currentDateTime = par.getCreated();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-    String currentDateTimeFormat = currentDateTime.format(formatter);
-    System.out.println(currentDateTimeFormat);
-    */

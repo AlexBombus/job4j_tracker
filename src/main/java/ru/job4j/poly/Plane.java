@@ -1,10 +1,9 @@
 package ru.job4j.poly;
 
-public class Bus implements Vehicle {
-
+public class Plane implements Vehicle {
     @Override
     public void move() {
-        System.out.println(getClass().getSimpleName() + " - едет по автомобильной дороге!");
+        System.out.println(getClass().getSimpleName() + " -å летит по небу!");
     }
 
     @Override

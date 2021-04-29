@@ -1,9 +1,14 @@
 package ru.job4j.poly;
 
-public interface Transport {
-    void move();
+public class Transport {
+    public static void main(String[] args) {
+        Vehicle bus = new Bus();
+        Vehicle plane = new Plane();
+        Vehicle train = new Train();
 
-    void passengers(int pas);
-
-    double fuelExpenses(double litre, double prise);
+        Vehicle[] vehicles = new Vehicle[]{bus, plane, train};
+        for (Vehicle vehicle : vehicles) {
+            vehicle.move();
+        }
+    }
 }

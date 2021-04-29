@@ -10,5 +10,4 @@ public class Plane implements Vehicle {
     public void passengers(int pas) {
         System.out.println("Вместимость " + pas + " пассажиров.");
     }
-
 }

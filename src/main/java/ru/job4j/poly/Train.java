@@ -10,5 +10,4 @@ public class Train implements Vehicle {
     public void passengers(int pas) {
 
     }
-
 }

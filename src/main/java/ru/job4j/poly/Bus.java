@@ -11,5 +11,4 @@ public class Bus implements Vehicle {
     public void passengers(int pas) {
         System.out.println("Вместимость " + pas + " пассажиров.");
     }
-
 }

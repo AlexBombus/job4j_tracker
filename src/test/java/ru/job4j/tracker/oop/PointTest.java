@@ -13,7 +13,7 @@ public class PointTest {
         Point b = new Point(1, 3);
         double actual = a.distance(b);
         double expect = 2.0;
-        Assert.assertEquals(expect, actual,0.1);
+        Assert.assertEquals(expect, actual, 0.1);
     }
 
     @Test

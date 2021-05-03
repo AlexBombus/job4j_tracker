@@ -10,18 +10,21 @@ public class StartUITest {
     public void whenFindById() {
         Output out = new StubOutput();
         Input in = new StubInput(
-                new String[] {"0", "1"}
+                new String[] {"0", "1", "1"}
         );
         Tracker tracker = new Tracker();
         UserAction[] actions = {
-                new FindByIdAction(out)
+                new FindByIdAction(out),
+                new ExitAction(out)
         };
         new StartUI(out).init(in, tracker, actions);
         MatcherAssert.assertThat(out.toString(), is(
                 "Menu." + System.lineSeparator()
-                        + "Find item by id" + System.lineSeparator()
-                        + "=== Find item by id ====" + System.lineSeparator()
-                        + "No item found with this id: 1." + System.lineSeparator()
+                        + "0. Find item by id" + System.lineSeparator()
+                        + "1. Exit Program" + System.lineSeparator()
+                        + "Menu." + System.lineSeparator()
+                        + "0. Find item by id" + System.lineSeparator()
+                        + "1. Exit Program" + System.lineSeparator()
         ));
     }
 

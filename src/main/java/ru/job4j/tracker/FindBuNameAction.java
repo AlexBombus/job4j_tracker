@@ -14,15 +14,15 @@ public class FindBuNameAction implements UserAction {
 
     @Override
     public boolean execute(Input input, Tracker tracker) {
-        System.out.println("=== Find item by name ====");
+        out.println("=== Find item by name ===");
         String name = input.askStr("Enter name: ");
         Item[] items = tracker.findByName(name);
         if (items.length > 0) {
             for (Item item : items) {
-                System.out.println(item);
+                out.println(item);
             }
         } else {
-            System.out.println("Item with name: " + name + " was not found.");
+            out.println("Item with this name was not found.");
         }
         return true;
     }

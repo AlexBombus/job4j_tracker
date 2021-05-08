@@ -28,8 +28,7 @@ public class StartUITest {
                 )
         );
     }
-
-
+    
     @Test
     public void whenFindAll() {
         Output out = new StubOutput();

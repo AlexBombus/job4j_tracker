@@ -2,7 +2,6 @@ package ru.job4j.tracker;
 
 /**
  * Получение данных из системы ввода до тех пор, пока не введут правильные символы.
- * Источник данных:  ValidateInput --> Input --> ConsoleInput --> Scanner.
  */
 public class ValidateInput implements Input {
     private final Output out;
@@ -33,3 +32,4 @@ public class ValidateInput implements Input {
         return value;
     }
 }
+

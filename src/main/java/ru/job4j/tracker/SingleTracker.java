@@ -1,11 +1,38 @@
 package ru.job4j.tracker;
 
-public class SingleTracker {
+/**
+ * Реализация шаблона проектирования Singleton
+ * Шаблон singleton - используется для создания класса, который может содержать только один
+ * экземпляр объекта этого класса.
+ *
+ * 1)Создаем  public final class - чтобы его нельзя было наследовать.
+ * 2) сделаем статическое поле для хранения экземпляра класса, при этом инициализировать его
+ * и по умолчанию оставляем пустым - private static SingleTracker instance = null;
+ * 3) создаем пустой  конструктор класса, с модификатором доступа private,
+ * чтобы никто больше не мог создать  объекто класса;
+ * 4) добавляем public static метод, чтобы другие классы могли получить доступ к объекту при этом
+ * делаем так, чтобы экземпляр создавался по первому вызову этого метода - getInstance()
+ *
+ *Так как нам нужно чтобы класс мог реализовывать все методы от класса Tracker,
+ * воспользовались композицией объектов чтобы не копировать код из класса трекер.
+ *
+ */
+
+public final class SingleTracker {
+
+    private static SingleTracker instance = null;
+
     private Tracker tracker = new Tracker();
 
-    private final SingleTracker singleTracker = new SingleTracker();
+    private SingleTracker() {
 
-    private  SingleTracker() {
+    }
+
+    public static SingleTracker getInstance() {
+        if (instance == null) {
+            instance = new SingleTracker();
+        }
+        return instance;
     }
 
     public Item add(Item item) {

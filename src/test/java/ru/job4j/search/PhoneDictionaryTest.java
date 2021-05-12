@@ -15,4 +15,14 @@ public class PhoneDictionaryTest {
         ArrayList<Person> persons = phones.find("Petr");
         Assert.assertEquals(persons.get(0).getSurname(), "Arsentev");
     }
+
+    @Test
+    public void whenFindByInvalid() {
+        PhoneDictionary phones = new PhoneDictionary();
+        phones.add(
+                new Person("Petr", "Arsentev", "534872", "Bryansk")
+        );
+        ArrayList<Person> persons = phones.find("Ivan");
+        Assert.assertTrue(persons.isEmpty());
+    }
 }

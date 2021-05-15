@@ -17,10 +17,10 @@ public class FindByIdAction implements UserAction {
         out.println("=== Find item by id ===");
         int id = input.askInt("Enter id: ");
         Item item = tracker.findById(id);
-        if (item != null) {
-            out.println(item);
-        } else {
+        if (item == null) {
             out.println("No item found with this id.");
+        } else {
+            out.println(item);
         }
         return true;
     }

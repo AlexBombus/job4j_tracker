@@ -9,6 +9,6 @@ public class NotifyAccount {
         for (Account account : accounts) {
             rsl.add(account);
         }
-        return rsl; // можно же через конструктор скопировать? -> return new HashSet<>(accounts);
+        return rsl; // можно через конструктор копировать -> return new HashSet<>(accounts);
     }
 }

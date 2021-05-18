@@ -15,4 +15,14 @@ public class PassportOfficeTest {
         office.add(citizen);
         MatcherAssert.assertThat(office.get(citizen.getPassport()), is(citizen));
     }
+
+    @Test
+    public void addOnlyOne() {
+        Citizen citizen = new Citizen("2f44a", "Petr Arsentev");
+        Citizen citizen1 = new Citizen("2f44a", "Petr");
+        PassportOffice office = new PassportOffice();
+        office.add(citizen);
+        office.add(citizen1);
+        MatcherAssert.assertThat(office.get(citizen.getPassport()), is(citizen));
+    }
 }

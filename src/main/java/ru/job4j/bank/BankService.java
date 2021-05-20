@@ -45,8 +45,7 @@ public class BankService {
                     if (account.getRequisite().equals(requisite)) {
                         return account;
                     }
-
-            }
+                }
         }
         return null;
     }

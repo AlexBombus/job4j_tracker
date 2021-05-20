@@ -9,12 +9,7 @@ public class BankService {
     private Map<User, List<Account>> users = new HashMap<>();
 
     public void addUser(User user) {
-        if (!this.users.containsKey(user)) {
-            this.users.put(user, new ArrayList<Account>());
-        } else {
-            System.out.println("Error. User with this passport data is already in the system.");
-        }
-
+        users.putIfAbsent(user, new ArrayList<>());
     }
 
     public void addAccount(String passport, Account account) {
@@ -54,7 +49,7 @@ public class BankService {
                                  String destPassport, String destRequisite, double amount) {
         Account src = findByRequisite(srcPassport, srcRequisite);
         Account dest = findByRequisite(destPassport, destRequisite);
-        if (src != null && dest != null && amount > 0 && amount <= src.getBalance()) {
+        if (src != null && dest != null && src.getBalance() >= amount) {
             src.setBalance(src.getBalance() - amount);
             dest.setBalance(dest.getBalance() + amount);
             return true;

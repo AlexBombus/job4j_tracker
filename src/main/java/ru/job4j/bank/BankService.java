@@ -18,16 +18,18 @@ public class BankService {
     }
 
     public void addAccount(String passport, Account account) {
-        for (User user : this.users.keySet()) {
-            if (user.getPassport().equals(passport)) {
-                this.users.get(user).add(account);
-                break;
+        User user = findByPassport(passport);
+        if (user != null) {
+            List<Account> list = users.get(user);
+            if (!list.contains(account)) {
+                list.add(account);
             }
+
         }
     }
 
     public User findByPassport(String passport) {
-        for (User user : this.users.keySet()) {
+        for (User user : users.keySet()) {
             if (user.getPassport().equals(passport)) {
                 return user;
             }
@@ -36,11 +38,14 @@ public class BankService {
     }
 
     public Account findByRequisite(String passport, String requisite) {
-        List<Account> list = users.get(findByPassport(passport));
-        if (list != null) {
-            for (Account account : list) {
-                if (account.getRequisite().equals(requisite)) {
-                    return account;
+        User user = findByPassport(passport);
+        if (user != null) {
+            List<Account> list = users.get(user);
+            if (list != null) {
+                for (Account account : list) {
+                    if (account.getRequisite().equals(requisite)) {
+                        return account;
+                    }
                 }
             }
         }
@@ -51,7 +56,7 @@ public class BankService {
                                  String destPassport, String destRequisite, double amount) {
         Account src = findByRequisite(srcPassport, srcRequisite);
         Account dest = findByRequisite(destPassport, destRequisite);
-        if (src != null && amount > 0 && amount <= src.getBalance() && dest != null) {
+        if (src != null && dest != null && amount > 0 && amount <= src.getBalance()) {
             src.setBalance(src.getBalance() - amount);
             dest.setBalance(dest.getBalance() + amount);
             return true;

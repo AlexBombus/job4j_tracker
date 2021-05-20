@@ -1,7 +1,9 @@
 package ru.job4j.collection;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 public class PassportOfficeTest {
@@ -10,7 +12,8 @@ public class PassportOfficeTest {
     public void add() {
         Citizen citizen = new Citizen("2f44a", "Petr Arsentev");
         PassportOffice office = new PassportOffice();
-        assertTrue(office.add(citizen));
+        office.add(citizen);
+        MatcherAssert.assertThat(office.get(citizen.getPassport()), is(citizen));
     }
 
     @Test

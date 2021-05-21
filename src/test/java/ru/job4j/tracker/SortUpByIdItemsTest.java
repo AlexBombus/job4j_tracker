@@ -16,7 +16,7 @@ public class SortUpByIdItemsTest {
         Item item2 = new Item(5, "Petya");
         Item item3 = new Item(3, "Olya");
         List<Item> input = Arrays.asList(item1, item2, item3);
-        Collections.sort(input, new SortUpByIdItems());
+        input.sort(new SortUpByIdItems());
         assertEquals(input.get(0).getId(), 3);
         assertEquals(input.get(1).getId(), 5);
         assertEquals(input.get(2).getId(), 10);

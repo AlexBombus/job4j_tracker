@@ -20,7 +20,3 @@ notifications:
       - youremail@smtp.ru
     on_success: never # default: change
     on_failure: always # default: always
-
-#  env:
-#  global:
-#    - CODECOV_TOKEN=:c12a486d-d10e-4ec9-b67e-303127723937

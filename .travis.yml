@@ -21,4 +21,4 @@ on_success: never # default: change
 
   env:
   global:
-    - CODECOV_TOKEN=:c12a486d-d10e-4ec9-b67e-303127723937
+    - CODECOV_TOKEN=:3a593c96-7188-4fbf-9f09-4bb98ea3f37d

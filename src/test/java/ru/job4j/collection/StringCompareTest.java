@@ -6,13 +6,12 @@ import org.junit.Test;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
 
 public class StringCompareTest {
     @Test
     public void whenStringsAreEqualThenZero() {
-        StringCompare compare = new StringCompare();
-        int rst = compare.compare(
+        StringCompare comp = new StringCompare();
+        int rst = comp.compare(
                 "Ivanov",
                 "Ivanov"
         );
@@ -21,8 +20,8 @@ public class StringCompareTest {
 
     @Test
     public void whenLeftLessThanRightResultShouldBeNegative() {
-        StringCompare compare = new StringCompare();
-        int rst = compare.compare(
+        StringCompare comp = new StringCompare();
+        int rst = comp.compare(
                 "Ivanov",
                 "Ivanova"
         );
@@ -31,8 +30,8 @@ public class StringCompareTest {
 
     @Test
     public void whenLeftGreaterThanRightResultShouldBePositive() {
-        StringCompare compare = new StringCompare();
-        int rst = compare.compare(
+        StringCompare comp = new StringCompare();
+        int rst = comp.compare(
                 "Petrov",
                 "Ivanova"
         );
@@ -41,8 +40,8 @@ public class StringCompareTest {
 
     @Test
     public void secondCharOfLeftGreaterThanRightShouldBePositive() {
-        StringCompare compare = new StringCompare();
-        int rst = compare.compare(
+        StringCompare comp = new StringCompare();
+        int rst = comp.compare(
                 "Petrov",
                 "Patrov"
         );
@@ -51,8 +50,8 @@ public class StringCompareTest {
 
     @Test
     public void secondCharOfLeftLessThanRightShouldBeNegative() {
-        StringCompare compare = new StringCompare();
-        int rst = compare.compare(
+        StringCompare comp = new StringCompare();
+        int rst = comp.compare(
                 "Patrova",
                 "Petrov"
         );

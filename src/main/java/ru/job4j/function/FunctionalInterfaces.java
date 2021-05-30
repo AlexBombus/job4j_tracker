@@ -41,7 +41,7 @@ public class FunctionalInterfaces {
           и при этом ему не требуется входной параметр.
          */
         Supplier<List<String>> sup = () -> new ArrayList<>(map.values());
-        Consumer<String> con = (str) -> System.out.println(str);
+        Consumer<String> con = str -> System.out.println(str);
         for (String s : sup.get()) {
             con.accept(s);
         }
@@ -55,5 +55,6 @@ public class FunctionalInterfaces {
         for (String s : sup.get()) {
             System.out.println(func.apply(s));
         }
+        System.out.println();
     }
 }

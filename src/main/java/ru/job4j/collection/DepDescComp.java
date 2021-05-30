@@ -12,7 +12,7 @@ import java.util.Comparator;
  */
 public class DepDescComp implements Comparator<String> {
     /**
-     * Ментод переопределяет абстрактный метод compare функционального интерфейса Comparator
+     * Метод переопределяет абстрактный метод compare функционального интерфейса Comparator
      * для сортировки значений кодов подразделений по убыванию.
      *
      * @param o1 входящий код подразделения

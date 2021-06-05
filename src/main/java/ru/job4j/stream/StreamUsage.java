@@ -12,6 +12,9 @@ import java.util.stream.Collectors;
 public class StreamUsage {
     public static void main(String[] args) {
         List<Integer> numbers = List.of(3, 2, -5, 10, -78, 0);
-        numbers.stream().filter(num -> num > 0).collect(Collectors.toList()).forEach(System.out::println);
+        numbers.stream()
+                .filter(num -> num > 0)
+                .collect(Collectors.toList())
+                .forEach(System.out::println);
     }
 }

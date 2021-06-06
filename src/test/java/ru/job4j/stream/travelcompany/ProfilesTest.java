@@ -44,4 +44,22 @@ public class ProfilesTest {
         List<Address> rsl = pro.collect(profiles);
         Assert.assertNotEquals(rsl, expected);
     }
+
+    @Test
+    public void whenCollectUniqSortedByCity() {
+        Profiles pro = new Profiles();
+        List<Profile> profiles = List.of(
+                new Profile(new Address("Питер", "Невский", 10, 3)),
+                new Profile(new Address("Питер", "Невский", 10, 3)),
+                new Profile(new Address("Хабаровск", "Сосновая", 1, 7)),
+                new Profile(new Address("Тверь", "Горького", 4, 6))
+        );
+        List<Address> expected = List.of(
+                new Address("Питер", "Невский", 10, 3),
+                new Address("Тверь", "Горького", 4, 6),
+                new Address("Хабаровск", "Сосновая", 1, 7)
+        );
+        List<Address> rsl = pro.collectUniqSortedByCity(profiles);
+        Assert.assertEquals(rsl, expected);
+    }
 }

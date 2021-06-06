@@ -43,14 +43,20 @@ public class School {
      * Для преобразования в Мар используется collect c аргументом Collectors.toMap.
      * @param students взодящий список учеников
      * @return Мар в которой качестве ключа используется фамилию ученика, значение - объект ученика.
+     *
+     * Для избежания вывода исключения связанного с повтором значения ключа,
+     * используем toMap() с тремя параметрами: в первом задаем ключ, во втором - значение,
+     * а третий параметр при выявлении коллизии значаения ключа, позволяет выбрать действие
+     * оставить уже имеющееся в Мар значение или заменить на новое.
+     * В данном примере заменил уже имеющееся значение на новое.
      */
     public Map<String, Student> listToMap(List<Student> students) {
         return students.stream()
-                .distinct()
                 .collect(
                         Collectors.toMap(
                                 Student::getSurname,
-                                student -> student
+                                student -> student,
+                                (existing, replacement) -> replacement
                         ));
     }
 }

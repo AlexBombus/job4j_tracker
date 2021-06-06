@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class BankService {
 
-    private Map<User, List<Account>> users = new HashMap<>();
+    private final Map<User, List<Account>> users = new HashMap<>();
 
     /**
      * метод  добавляет в БД данные о клиенте, ничего не возвращае.
@@ -30,6 +30,7 @@ public class BankService {
 
     /**
      * Метод добавляет данные счета пользователя.
+     * В текущей редакции метода использование цикла заменено на Stream API
      * @param passport номер паспорта клиента
      * @param account  содержит реквизиты и баланс счета клиента
      * Используется метод findByPassport  для поиска клиента по номеру паспорта
@@ -49,10 +50,19 @@ public class BankService {
 
     /**
      * Метод осуществляет поиск клиента по номеру паспорта
+     * В текущей редакции метода использование цикла заменено на Stream API
      * @param passport - номер паспорта клиента
      * @return данные о клиенте в виде {@link User } если таковой найден в БД
      * или  null - если не найден.
      */
+    public User findByPassport(String passport) {
+                return users.keySet().stream()
+                        .filter(user -> user.getPassport().equals(passport))
+                        .findFirst()
+                        .orElse(null);
+            }
+    /*
+    Предыдущая реализация метода findByPassport():
     public User findByPassport(String passport) {
         for (User user : users.keySet()) {
             if (user.getPassport().equals(passport)) {
@@ -61,6 +71,7 @@ public class BankService {
         }
         return null;
     }
+     */
 
     /**
      * Метод находит счет  клиента по реквизитам
@@ -68,6 +79,18 @@ public class BankService {
      * @param requisite - реквизиты счета
      * @return счет клента если такой найден в БД и null -если не найден.
      */
+    public Account findByRequisite(String passport, String requisite) {
+        User user = findByPassport(passport);
+        if (user != null) {
+        return users.get(user).stream()
+                .filter(account -> account.getRequisite().equals(requisite))
+                .findFirst()
+                .orElse(null);
+        }
+        return null;
+    }
+    /*
+    Предыдущая реализация метода findByRequisite():
     public Account findByRequisite(String passport, String requisite) {
         User user = findByPassport(passport);
         if (user != null) {
@@ -80,6 +103,7 @@ public class BankService {
         }
         return null;
     }
+     */
 
     /**
      * Метод выполняет р анзакции ежду счетами клиентов

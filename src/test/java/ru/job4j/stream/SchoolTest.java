@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public class SchoolTest {
@@ -59,6 +60,45 @@ public class SchoolTest {
         expected.add(new Student(10, "Surname1"));
         expected.add(new Student(30, "Surname3"));
         expected.add(new Student(40, "Surname4"));
+        Assert.assertEquals(rsl, expected);
+    }
+
+    @Test
+    public void whenListToMap() {
+        List<Student> students = List.of(
+                new Student(10, "Surname1"),
+                new Student(30, "Surname3"),
+                new Student(40, "Surname4"),
+                new Student(60, "Surname2")
+        );
+        School sc = new School();
+        Map<String, Student> expected =  Map.of(
+                "Surname1", new Student(10, "Surname1"),
+                "Surname3", new Student(30, "Surname3"),
+                "Surname4", new Student(40, "Surname4"),
+                "Surname2", new Student(60, "Surname2")
+        );
+        Map<String, Student> rsl = sc.listToMap(students);
+        Assert.assertEquals(rsl, expected);
+    }
+
+    @Test
+    public void whenListToMapWithDupl() {
+        List<Student> students = List.of(
+                new Student(10, "Surname1"),
+                new Student(10, "Surname1"),
+                new Student(30, "Surname3"),
+                new Student(40, "Surname4"),
+                new Student(60, "Surname2")
+        );
+        School sc = new School();
+        Map<String, Student> expected =  Map.of(
+                "Surname1", new Student(10, "Surname1"),
+                "Surname3", new Student(30, "Surname3"),
+                "Surname4", new Student(40, "Surname4"),
+                "Surname2", new Student(60, "Surname2")
+        );
+        Map<String, Student> rsl = sc.listToMap(students);
         Assert.assertEquals(rsl, expected);
     }
 }

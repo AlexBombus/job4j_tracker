@@ -17,14 +17,20 @@ public class Profiles {
     /**
      * Метод формирует список адресов из списка профайлов клиентов,
      * при этом  оставляет только уникальные(неповоряющиеся) элементы.
+     * Используются методы Stream API:
+     * .stream() создает поток данных из List<Profile> profiles;
+     * .map()  принимает элемент потока Profile, а возвращает другой элемент - адрес;
+     * .sorted() сортируе элементы по полю String city;
+     * .distinct() осавляет только уникальные элементы исключая дубликаты;
+     * .collect() отобранные элементы собираются в список List
      * @param profiles список профайлов клиентов
      * @return список адресов без повторяющихся значений
      */
     public List<Address> collectUniqSortedByCity(List<Profile> profiles) {
-        return profiles.stream()    // создае поток данных из List<Profile> profiles
-                .map(Profile::getAddress) // принимает элемент потока Profile, а возвращает другой эл]. - адрес
-                .sorted(Comparator.comparing(Address::getCity)) // сорируе элементы по полю String city.
-                .distinct() // осавляе олько уникальные элементы исключая дубликаы
-                .collect(Collectors.toList()); // ообранные элеменв собираюся в список List
+        return profiles.stream()
+                .map(Profile::getAddress)
+                .sorted(Comparator.comparing(Address::getCity))
+                .distinct()
+                .collect(Collectors.toList());
     }
 }

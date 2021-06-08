@@ -2,6 +2,12 @@ package ru.job4j.stream;
 
 import java.util.stream.Stream;
 
+/**
+ * В классе приведен каркас карточной колоды.
+ * Необходимо написать метод main, в котором генерируется колода карт.
+ * Решение необходимо написать в виде потока.
+ *
+ */
 public class Card {
     private Suit suit;
     private Value value;

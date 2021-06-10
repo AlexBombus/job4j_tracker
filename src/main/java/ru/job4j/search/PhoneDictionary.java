@@ -9,7 +9,7 @@ import java.util.function.Predicate;
  * и метод поиска абонента  в списке по ключу.
  */
 public class PhoneDictionary {
-    private ArrayList<Person> persons = new ArrayList<>();
+    private final ArrayList<Person> persons = new ArrayList<>();
 
     public void add(Person person) {
         this.persons.add(person);
@@ -30,8 +30,8 @@ public class PhoneDictionary {
         Predicate<Person> findBySurname = person -> person.getSurname().contains(key);
         Predicate<Person> findByPhone = person -> person.getPhone().contains(key);
         Predicate<Person> findByAddress = person -> person.getAddress().contains(key);
-        Predicate<Person> combine = findByName.or(findBySurname).or(findByPhone).or(findByAddress);
-        for (Person person : persons) {
+        var combine = findByName.or(findBySurname).or(findByPhone).or(findByAddress);
+        for (var person : persons) {
             if (combine.test(person)) {
                 result.add(person);
             }
@@ -39,6 +39,7 @@ public class PhoneDictionary {
         return result;
     }
 }
+
  /*
  Предыдущая реализация метода:
  public ArrayList<Person> find(String key) {

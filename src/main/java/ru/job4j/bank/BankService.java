@@ -1,9 +1,6 @@
 package ru.job4j.bank;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Класс задает методы по вводу в базу данных (БД) новых пользователей (клиентов Банка),
@@ -20,7 +17,7 @@ public class BankService {
     private final Map<User, List<Account>> users = new HashMap<>();
 
     /**
-     * метод  добавляет в БД данные о клиенте, ничего не возвращае.
+     * метод  доб4. Optional в Stream API. [#279130 #166583]авляет в БД данные о клиенте.
      * Метод  Map.putIfAbsent осуществляет проверку на наличие такого клиента в БД,
      * добавляет его в случае, если такого там еще нет и создает пустой массив списка счетов
      */
@@ -37,9 +34,9 @@ public class BankService {
      * В методе осуществляется проверка клента на null и на дублирование счета в БД
      */
     public void addAccount(String passport, Account account) {
-        User user = findByPassport(passport);
-        if (user != null) {
-            List<Account> list = users.get(user);
+        Optional<User> user = findByPassport(passport);
+        if (user.isPresent()) {
+            List<Account> list = users.get(user.get());
             if (!list.contains(account)) {
                 list.add(account);
             }
@@ -54,12 +51,11 @@ public class BankService {
      * @return данные о клиенте в виде {@link User } если таковой найден в БД
      * или  null - если не найден.
      */
-    public User findByPassport(String passport) {
-                return users.keySet().stream()
-                        .filter(user -> user.getPassport().equals(passport))
-                        .findFirst()
-                        .orElse(null);
-            }
+    public Optional<User> findByPassport(String passport) {
+        return users.keySet().stream()
+                .filter(user -> user.getPassport().equals(passport))
+                .findFirst();
+    }
     /*
     Предыдущая реализация метода findByPassport():
     public User findByPassport(String passport) {
@@ -78,16 +74,19 @@ public class BankService {
      * @param requisite - реквизиты счета
      * @return счет клента если такой найден в БД и null -если не найден.
      */
-    public Account findByRequisite(String passport, String requisite) {
-        User user = findByPassport(passport);
-        if (user != null) {
-        return users.get(user).stream()
-                .filter(account -> account.getRequisite().equals(requisite))
-                .findFirst()
-                .orElse(null);
+    public Optional<Account> findByRequisite(String passport, String requisite) {
+        Optional<User> user = findByPassport(passport);
+        if (user.isPresent()) {
+            Optional<Account> rsl = users.get(user.get()).stream()
+                    .filter(account -> account.getRequisite().equals(requisite))
+                    .findFirst();
+            if (rsl.isPresent()) {
+                return rsl;
+            }
         }
-        return null;
+        return Optional.empty();
     }
+
     /*
     Предыдущая реализация метода findByRequisite():
     public Account findByRequisite(String passport, String requisite) {
@@ -115,11 +114,11 @@ public class BankService {
      */
     public boolean transferMoney(String srcPassport, String srcRequisite,
                                  String destPassport, String destRequisite, double amount) {
-        Account src = findByRequisite(srcPassport, srcRequisite);
-        Account dest = findByRequisite(destPassport, destRequisite);
-        if (src != null && dest != null && src.getBalance() >= amount) {
-            src.setBalance(src.getBalance() - amount);
-            dest.setBalance(dest.getBalance() + amount);
+        Optional<Account> src = findByRequisite(srcPassport, srcRequisite);
+        Optional<Account> dest = findByRequisite(destPassport, destRequisite);
+        if (src.isPresent() && dest.isPresent() && src.get().getBalance() >= amount) {
+            src.get().setBalance(src.get().getBalance() - amount);
+            dest.get().setBalance(dest.get().getBalance() + amount);
             return true;
         }
         return false;

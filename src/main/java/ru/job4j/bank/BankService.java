@@ -36,7 +36,6 @@ public class BankService {
      * Используется метод findByPassport  для поиска клиента по номеру паспорта
      * В методе осуществляется проверка клента на null и на дублирование счета в БД
      */
-
     public void addAccount(String passport, Account account) {
         User user = findByPassport(passport);
         if (user != null) {
@@ -106,7 +105,7 @@ public class BankService {
      */
 
     /**
-     * Метод выполняет р анзакции ежду счетами клиентов
+     * Метод выполняет транзакции ежду счетами клиентов
      * @param srcPassport - данные владельца счета списания средств
      * @param srcRequisite - рекквизиты счета спиания средств
      * @param destPassport - данные владельца счета зачисления средств

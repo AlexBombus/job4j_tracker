@@ -1,6 +1,7 @@
 package ru.job4j.attestation;
 
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -55,7 +56,9 @@ public class Analyze {
      *- flatMap() для преобразования в поток объектов Subject;
      * - метод collect() в который передаем метод groupingBy() класса Collectors.
      * При этом карта собирается следующим образом: ключ - это имя предмета,
-     * значение - средний балл по этому предмету для каждого ученика.
+     * значение - средний балл по этому предмету для каждого ученика. Для прохождения теста,
+     * whenListOfSubjectAverage() - как заданного условия задачи с определенной последовательностью,
+     * использовал конструктор LinkedHashMap::new для сохранения порядка вставляемых элементовтов.
      * Для расчета среднего балла используем метод averagingDouble() класса Collectors;
      * - собранную карту  разбираем с помощью entrySet() и открываем поток с помощью stream();
      * - полученный поток с помощью map() преобразуем в поток объектов класса Tuple,
@@ -69,7 +72,8 @@ public class Analyze {
     public static List<Tuple> averageScoreByPupil(Stream<Pupil> stream) {
         return stream.flatMap(pupil -> pupil.getSubjects().stream())
                 .collect(Collectors.groupingBy(
-                        Subject::getName, Collectors.averagingDouble(Subject::getScore)))
+                        Subject::getName, LinkedHashMap::new,
+                        Collectors.averagingDouble(Subject::getScore)))
                 .entrySet()
                 .stream()
                 .map(entry -> new Tuple(entry.getKey(), entry.getValue()))

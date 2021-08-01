@@ -10,6 +10,11 @@ public class SqlTracker implements Store {
 
     private Connection cn;
 
+    /**
+     *
+     * Метод getResourcesAsStream() возвращает поток ввода для файла,
+     * который находится в папке resources с указанным именем.
+     */
     public void init() {
         try (InputStream in =
                      SqlTracker.class.getClassLoader().getResourceAsStream("app.properties")) {

@@ -12,7 +12,7 @@ public class ValidateInputTest {
         Input in = new StubInput(
                 new String[]{"one", "1"}
         );
-        ValidateInput input = new ValidateInput(out, in);
+        ValidateInput input = new ValidateInput(in, out);
         int selected = input.askInt("Select:");
         MatcherAssert.assertThat(selected, is(1));
     }
@@ -23,7 +23,7 @@ public class ValidateInputTest {
         Input in = new StubInput(
                 new String[]{"1"}
         );
-        ValidateInput input = new ValidateInput(out, in);
+        ValidateInput input = new ValidateInput(in, out);
         int selected = input.askInt("Select:");
         MatcherAssert.assertThat(selected, is(1));
     }
@@ -34,7 +34,7 @@ public class ValidateInputTest {
         Input in = new StubInput(
                 new String[]{"1", "1"}
         );
-        ValidateInput input = new ValidateInput(out, in);
+        ValidateInput input = new ValidateInput(in, out);
         int selected = input.askInt("Select:");
         MatcherAssert.assertThat(selected, is(1));
     }
@@ -45,7 +45,7 @@ public class ValidateInputTest {
         Input in = new StubInput(
                 new String[]{"-1"}
         );
-        ValidateInput input = new ValidateInput(out, in);
+        ValidateInput input = new ValidateInput(in, out);
         int selected = input.askInt("Select:");
         MatcherAssert.assertThat(selected, is(-1));
     }

@@ -2,7 +2,6 @@ package ru.job4j.tracker;
 
 import java.io.InputStream;
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -51,7 +50,7 @@ public class SqlTracker implements Store {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Ошибка: " + e.getMessage());
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return item;
@@ -66,7 +65,7 @@ public class SqlTracker implements Store {
             statement.setInt(2, id);
             result = statement.executeUpdate() > 0;
         } catch (Exception e) {
-            System.out.println("Ошибка: " + e.getMessage());
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return result;
@@ -86,7 +85,7 @@ public class SqlTracker implements Store {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Ошибка: " + e.getMessage());
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return items;
@@ -95,7 +94,8 @@ public class SqlTracker implements Store {
     @Override
     public List<Item> findByName(String key) {
         List<Item> items = new ArrayList<>();
-        try (PreparedStatement statement = cn.prepareStatement("select * from items where name = ?")) {
+        try (PreparedStatement statement =
+                     cn.prepareStatement("select * from items where name = ?")) {
             statement.setString(1, key);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
@@ -106,7 +106,7 @@ public class SqlTracker implements Store {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Ошибка: " + e.getMessage());
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return items;
@@ -115,7 +115,8 @@ public class SqlTracker implements Store {
     @Override
     public Item findById(int id) {
         Item item = null;
-        try (PreparedStatement statement = cn.prepareStatement("select * from items where id = ?")) {
+        try (PreparedStatement statement =
+                     cn.prepareStatement("select * from items where id = ?")) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
@@ -126,7 +127,7 @@ public class SqlTracker implements Store {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Ошибка: " + e.getMessage());
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return item;
@@ -146,22 +147,23 @@ public class SqlTracker implements Store {
         return result;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Item it1 = new Item("qwe");
         Item it2 = new Item("asd");
-        SqlTracker sqlTracker = new SqlTracker();
-        System.out.println("+++++++++++ add item ++++++++++++++++++++++");
-        sqlTracker.add(it1);
-        System.out.println(sqlTracker.findAll());
-        System.out.println("+++++++++++ replace item ++++++++++++++++++++");
-        sqlTracker.replace(it1.getId(), it2);
-        System.out.println(sqlTracker.findAll());
-        System.out.println("++++++++++++ find item by name +++++++++++++++");
-        System.out.println(sqlTracker.findByName("asd"));
-        System.out.println("++++++++++++ find item by id +++++++++++++++++");
-        System.out.println(sqlTracker.findById(it1.getId()));
-        System.out.println("+++++++++++ delete item ++++++++++++++++++++");
-        sqlTracker.delete(it1.getId());
-        System.out.println(sqlTracker.findAll());
+        try (SqlTracker sqlTracker = new SqlTracker()) {
+            System.out.println("+++++++++++ add item ++++++++++++++++++++++");
+            sqlTracker.add(it1);
+            System.out.println(sqlTracker.findAll());
+            System.out.println("+++++++++++ replace item ++++++++++++++++++++");
+            sqlTracker.replace(it1.getId(), it2);
+            System.out.println(sqlTracker.findAll());
+            System.out.println("++++++++++++ find item by name +++++++++++++++");
+            System.out.println(sqlTracker.findByName("asd"));
+            System.out.println("++++++++++++ find item by id +++++++++++++++++");
+            System.out.println(sqlTracker.findById(it1.getId()));
+            System.out.println("+++++++++++ delete item ++++++++++++++++++++");
+            sqlTracker.delete(it1.getId());
+            System.out.println(sqlTracker.findAll());
+        }
     }
 }

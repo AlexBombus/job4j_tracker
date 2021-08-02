@@ -1,8 +1,9 @@
 package ru.job4j.tracker;
 
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -10,11 +11,10 @@ public class SqlTracker implements Store {
 
     private Connection cn;
 
-    /**
-     *
-     * Метод getResourcesAsStream() возвращает поток ввода для файла,
-     * который находится в папке resources с указанным именем.
-     */
+    public SqlTracker() {
+        this.init();
+    }
+
     public void init() {
         try (InputStream in =
                      SqlTracker.class.getClassLoader().getResourceAsStream("app.properties")) {
@@ -40,31 +40,128 @@ public class SqlTracker implements Store {
 
     @Override
     public Item add(Item item) {
-        return null;
+        try (PreparedStatement statement =
+                     cn.prepareStatement("insert into items(name) values (?)",
+                             Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, item.getName());
+            statement.execute();
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    item.setId(generatedKeys.getInt(1));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return item;
     }
 
     @Override
     public boolean replace(int id, Item item) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(int id) {
-        return false;
+        boolean result = false;
+        try (PreparedStatement statement =
+                     cn.prepareStatement("update items set name = ? where id = ?")) {
+            statement.setString(1, item.getName());
+            statement.setInt(2, id);
+            result = statement.executeUpdate() > 0;
+        } catch (Exception e) {
+            System.out.println("Ошибка: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
     public List<Item> findAll() {
-        return null;
+        List<Item> items = new ArrayList<>();
+        try (PreparedStatement statement = cn.prepareStatement("select * from items")) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    items.add(new Item(
+                            resultSet.getInt("id"),
+                            resultSet.getString("name")
+//                            resultSet.getObject("created", LocalDateTime.class)
+                    ));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Ошибка: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return items;
     }
 
     @Override
     public List<Item> findByName(String key) {
-        return null;
+        List<Item> items = new ArrayList<>();
+        try (PreparedStatement statement = cn.prepareStatement("select * from items where name = ?")) {
+            statement.setString(1, key);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    items.add(new Item(
+                            resultSet.getInt("id"),
+                            resultSet.getString("name")
+                    ));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Ошибка: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return items;
     }
 
     @Override
     public Item findById(int id) {
-        return null;
+        Item item = null;
+        try (PreparedStatement statement = cn.prepareStatement("select * from items where id = ?")) {
+            statement.setInt(1, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    item = new Item(
+                            resultSet.getInt("id"),
+                            resultSet.getString("name")
+                    );
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Ошибка: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return item;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        boolean result = false;
+        try (PreparedStatement statement =
+                     cn.prepareStatement("delete from items where id = ?")) {
+            statement.setInt(1, id);
+            result = statement.executeUpdate() > 0;
+        } catch (Exception e) {
+            System.out.println("Ошибка: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Item it1 = new Item("qwe");
+        Item it2 = new Item("asd");
+        SqlTracker sqlTracker = new SqlTracker();
+        System.out.println("+++++++++++ add item ++++++++++++++++++++++");
+        sqlTracker.add(it1);
+        System.out.println(sqlTracker.findAll());
+        System.out.println("+++++++++++ replace item ++++++++++++++++++++");
+        sqlTracker.replace(it1.getId(), it2);
+        System.out.println(sqlTracker.findAll());
+        System.out.println("++++++++++++ find item by name +++++++++++++++");
+        System.out.println(sqlTracker.findByName("asd"));
+        System.out.println("++++++++++++ find item by id +++++++++++++++++");
+        System.out.println(sqlTracker.findById(it1.getId()));
+        System.out.println("+++++++++++ delete item ++++++++++++++++++++");
+        sqlTracker.delete(it1.getId());
+        System.out.println(sqlTracker.findAll());
     }
 }

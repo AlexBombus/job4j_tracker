@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.Objects;
+
 public class FindByIdAction implements UserAction {
     private final Output out;
 
@@ -13,15 +15,11 @@ public class FindByIdAction implements UserAction {
     }
 
     @Override
-    public boolean execute(Input input, MemTracker memTracker) {
+    public boolean execute(Input input, Store store) {
         out.println("=== Find item by id ===");
         int id = input.askInt("Enter id: ");
-        Item item = memTracker.findById(id);
-        if (item == null) {
-            out.println("No item found with this id.");
-        } else {
-            out.println(item);
-        }
+        Item item = store.findById(id);
+        out.println(Objects.requireNonNullElse(item, "No item found with this id."));
         return true;
     }
 }

@@ -13,10 +13,10 @@ public class DeleteAction implements UserAction {
     }
 
     @Override
-    public boolean execute(Input input, MemTracker memTracker) {
+    public boolean execute(Input input, Store store) {
         out.println("=== Delete Item ===");
         int id = input.askInt("Enter id: ");
-        if (memTracker.delete(id)) {
+        if (store.delete(id)) {
             out.println("The item has been successfully deleted.");
         } else {
             out.println("Error. No item found with this id.");

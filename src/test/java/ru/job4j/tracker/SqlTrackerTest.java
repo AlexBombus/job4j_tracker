@@ -71,7 +71,7 @@ public class SqlTrackerTest {
         Item item2 = new Item("item2");
         int id = tracker.add(item1).getId();
         tracker.replace(id, item2);
-        MatcherAssert.assertThat(tracker.findById(id).getName(), is(item2.getName()));
+        MatcherAssert.assertThat(tracker.findById(id), is(item2));
     }
 
     @Test

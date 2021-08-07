@@ -65,10 +65,12 @@ public class SqlTracker implements Store {
     public boolean replace(int id, Item item) {
         boolean result = false;
         try (PreparedStatement statement =
-                     cn.prepareStatement("update items set name = ? where id = ?")) {
+                     cn.prepareStatement("update items set name = ?, created = ? where id = ?")) {
             statement.setString(1, item.getName());
-            statement.setInt(2, id);
+            statement.setTimestamp(2, Timestamp.valueOf(item.getCreated()));
+            statement.setInt(3, id);
             result = statement.executeUpdate() > 0;
+            item.setId(id);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -156,6 +158,7 @@ public class SqlTracker implements Store {
 
     public static void main(String[] args) throws Exception {
         Item it1 = new Item("qwe");
+        Thread.sleep(2000); // приостановка программы на 2 сек для разного значения created
         Item it2 = new Item("asd");
         try (SqlTracker sqlTracker = new SqlTracker()) {
             System.out.println("+++++++++++ add item ++++++++++++++++++++++");
@@ -167,9 +170,9 @@ public class SqlTracker implements Store {
             System.out.println("++++++++++++ find item by name +++++++++++++++");
             System.out.println(sqlTracker.findByName("asd"));
             System.out.println("++++++++++++ find item by id +++++++++++++++++");
-            System.out.println(sqlTracker.findById(it1.getId()));
+            System.out.println(sqlTracker.findById(it2.getId()));
             System.out.println("+++++++++++ delete item ++++++++++++++++++++");
-            sqlTracker.delete(it1.getId());
+            sqlTracker.delete(it2.getId());
             System.out.println(sqlTracker.findAll());
         }
     }

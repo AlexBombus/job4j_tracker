@@ -14,6 +14,10 @@ public class SqlTracker implements Store {
         this.init();
     }
 
+    public SqlTracker(Connection connection) {
+        cn = connection;
+    }
+
     public void init() {
         try (InputStream in =
                      SqlTracker.class.getClassLoader().getResourceAsStream("app.properties")) {
@@ -93,11 +97,11 @@ public class SqlTracker implements Store {
     }
 
     @Override
-    public List<Item> findByName(String key) {
+    public List<Item> findByName(String name) {
         List<Item> items = new ArrayList<>();
         try (PreparedStatement statement =
                      cn.prepareStatement("select * from items where name = ?")) {
-            statement.setString(1, key);
+            statement.setString(1, name);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     items.add(new Item(

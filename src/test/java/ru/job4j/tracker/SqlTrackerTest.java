@@ -1,6 +1,5 @@
 package ru.job4j.tracker;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.*;
 
 import java.io.InputStream;
@@ -11,8 +10,6 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-
-import static org.hamcrest.Matchers.is;
 
 public class SqlTrackerTest {
 
@@ -53,7 +50,7 @@ public class SqlTrackerTest {
         SqlTracker tracker = new SqlTracker(connection);
         Item item = new Item("item");
         int id = tracker.add(item).getId();
-        MatcherAssert.assertThat(tracker.findById(id).getName(), is("item"));
+        Assert.assertEquals(tracker.findById(id), item);
     }
 
     @Test
@@ -61,7 +58,7 @@ public class SqlTrackerTest {
         SqlTracker tracker = new SqlTracker(connection);
         Item item = new Item("item");
         tracker.add(item);
-        MatcherAssert.assertThat(tracker.findById(item.getId()), is(item));
+        Assert.assertEquals(tracker.findById(item.getId()), item);
     }
 
     @Test
@@ -71,7 +68,7 @@ public class SqlTrackerTest {
         Item item2 = new Item("item2");
         int id = tracker.add(item1).getId();
         tracker.replace(id, item2);
-        MatcherAssert.assertThat(tracker.findById(id), is(item2));
+        Assert.assertEquals(tracker.findById(id), item2);
     }
 
     @Test
@@ -84,7 +81,7 @@ public class SqlTrackerTest {
         tracker.add(item2);
         tracker.add(item3);
         List<Item> exp = Arrays.asList(item1, item2, item3);
-        MatcherAssert.assertThat(tracker.findAll(), is(exp));
+        Assert.assertEquals(tracker.findAll(), exp);
     }
 
     @Test
@@ -97,7 +94,7 @@ public class SqlTrackerTest {
         tracker.add(item2);
         tracker.add(item3);
         List<Item> exp = Arrays.asList(item1, item2);
-        MatcherAssert.assertThat(tracker.findByName("item"), is(exp));
+        Assert.assertEquals(tracker.findByName("item"), exp);
     }
 
     @Test
@@ -111,6 +108,6 @@ public class SqlTrackerTest {
         tracker.add(item3);
         tracker.delete(item3.getId());
         List<Item> exp = Arrays.asList(item1, item2);
-        MatcherAssert.assertThat(tracker.findAll(), is(exp));
+        Assert.assertEquals(tracker.findAll(), exp);
     }
 }

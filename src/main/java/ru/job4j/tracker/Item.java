@@ -64,7 +64,7 @@ public class Item {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getCreated().withNano(0));
+        return Objects.hash(getId(), getName(), getCreated());
     }
 
     @Override

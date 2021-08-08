@@ -58,13 +58,14 @@ public class Item {
             return false;
         }
         Item item = (Item) o;
-        return getId() == item.getId() && Objects.equals(getName(),
-                item.getName()) && Objects.equals(getCreated(), item.getCreated());
+        return getId() == item.getId()
+                && Objects.equals(getName(), item.getName())
+                && Objects.equals(getCreated().withNano(0), item.getCreated().withNano(0));
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getCreated());
+        return Objects.hash(getId(), getName(), getCreated().withNano(0));
     }
 
     @Override

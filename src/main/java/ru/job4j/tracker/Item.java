@@ -5,8 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Item {
-    private static final DateTimeFormatter FORMATTER =
-            DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
     private int id;
     private String name;
     private LocalDateTime created = LocalDateTime.now();
@@ -60,7 +59,7 @@ public class Item {
         Item item = (Item) o;
         return getId() == item.getId()
                 && Objects.equals(getName(), item.getName())
-                && Objects.equals(getCreated().withNano(0), item.getCreated().withNano(0));
+                && Objects.equals(getCreated(), item.getCreated());
     }
 
     @Override
@@ -70,8 +69,9 @@ public class Item {
 
     @Override
     public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         return "Item {" + "id = " + id + ", name = '" + name + '\''
-                + ", created = " + created.format(FORMATTER) + '}';
+                + ", created = " + created.format(formatter) + '}';
     }
 
 }

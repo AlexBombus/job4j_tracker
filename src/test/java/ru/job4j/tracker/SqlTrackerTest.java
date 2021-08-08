@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -44,7 +44,6 @@ public class SqlTrackerTest {
             statement.execute();
         }
     }
-    // может тесты в трэвисе валятся потому что неизменяемый Arrays.asList?
 
     @Test
     public void whenFindById() {
@@ -81,10 +80,7 @@ public class SqlTrackerTest {
         tracker.add(item1);
         tracker.add(item2);
         tracker.add(item3);
-        List<Item> exp = new ArrayList<>();
-        exp.add(item1);
-        exp.add(item2);
-        exp.add(item3);
+        List<Item> exp = Arrays.asList(item1, item2, item3);
         Assert.assertEquals(tracker.findAll(), exp);
     }
 
@@ -97,9 +93,7 @@ public class SqlTrackerTest {
         tracker.add(item1);
         tracker.add(item2);
         tracker.add(item3);
-        List<Item> exp = new ArrayList<>();
-        exp.add(item1);
-        exp.add(item2);
+        List<Item> exp = Arrays.asList(item1, item2);
         Assert.assertEquals(tracker.findByName("item"), exp);
     }
 
@@ -113,9 +107,7 @@ public class SqlTrackerTest {
         tracker.add(item2);
         tracker.add(item3);
         tracker.delete(item3.getId());
-        List<Item> exp = new ArrayList<>();
-        exp.add(item1);
-        exp.add(item2);
+        List<Item> exp = Arrays.asList(item1, item2);
         Assert.assertEquals(tracker.findAll(), exp);
     }
 }

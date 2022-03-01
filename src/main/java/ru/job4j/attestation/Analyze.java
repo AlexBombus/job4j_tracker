@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Класс Analyze получает статистику по аттестатам.
+ * Класс Analyze содержит статические медоды для получения статистики по аттестатам.
  */
 public class Analyze {
     /**

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.elizalex</groupId>
-    <artifactId>garage</artifactId>
+    <artifactId>job4j_tracker</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
@@ -21,8 +21,8 @@
             <id>test</id>
             <properties>
                 <db.url>jdbc:h2:~/testdb;MODE=PostgreSQL;CASE_INSENSITIVE_IDENTIFIERS=TRUE;</db.url>
-                <db.username></db.username>
-                <db.password></db.password>
+                <db.username>user</db.username>
+                <db.password>password</db.password>
                 <db.driver>org.h2.Driver</db.driver>
             </properties>
             <activation>
@@ -34,7 +34,8 @@
             <properties>
                 <db.url>jdbc:postgresql://127.0.0.1:5432/tracker</db.url>
                 <db.username>postgres</db.username>
-                <db.password>password</db.password>
+<!--                изменить пароль в соответствии с паролем БД -->
+                <db.password>pasword</db.password>
                 <db.driver>org.postgresql.Driver</db.driver>
             </properties>
         </profile>
@@ -50,18 +51,18 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13.1</version>
+            <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.2.23</version>
+            <version>42.3.3</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.200</version>
+            <version>2.1.210</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

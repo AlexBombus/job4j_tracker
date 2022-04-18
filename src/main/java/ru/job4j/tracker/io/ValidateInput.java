@@ -1,4 +1,7 @@
-package ru.job4j.tracker;
+package ru.job4j.tracker.io;
+
+import ru.job4j.tracker.io.Input;
+import ru.job4j.tracker.io.Output;
 
 /**
  * Получение данных из системы ввода до тех пор, пока не введут правильные символы.
